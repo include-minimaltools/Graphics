@@ -7,28 +7,54 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/TituloDelPrograma1"
+        android:id="@+id/gameTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="90dp"
-        android:layout_marginEnd="190dp"
+        android:layout_marginTop="92dp"
+        android:text="@string/gameTitle"
         android:textAlignment="center"
-        android:background="@drawable/titulo_del_programa"
-        android:text="@string/Titulo1"
-        app:layout_constraintHorizontal_bias="0.26"
+        android:textSize="48sp"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="177dp" />
+        tools:layout_editor_absoluteX="0dp" />
 
-    <TextView
-        android:id="@+id/TituloDelPrograma2"
+    <View
+        android:id="@+id/gameBoard"
         android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:layout_marginBottom="84dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="51dp" />
+
+    <Button
+        android:id="@+id/btnExit"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="180dp"
-        android:layout_marginEnd="100dp"
-        android:textAlignment="center"
-        android:background="@drawable/titulo_del_programa"
-        android:text="@string/Titulo2"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="170dp"
-        tools:layout_editor_absoluteY="222dp" />
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="21dp"
+        android:text="@string/exit"
+        app:layout_constraintBottom_toBottomOf="@+id/gameBoard"
+        app:layout_constraintStart_toStartOf="@+id/gameBoard"
+        app:layout_constraintTop_toTopOf="@+id/gameBoard"
+        app:layout_constraintVertical_bias="0.0"
+        android:onClick="onClick"
+        />
+
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="88dp"
+        android:text="@string/play"
+        app:layout_constraintBottom_toBottomOf="@+id/gameBoard"
+        app:layout_constraintEnd_toEndOf="@+id/gameBoard"
+        app:layout_constraintTop_toTopOf="@+id/gameBoard"
+        app:layout_constraintVertical_bias="0.461"
+        android:onClick="onClick"
+        /><![CDATA[
+
+    />
+
+]]>
 </androidx.constraintlayout.widget.ConstraintLayout>
