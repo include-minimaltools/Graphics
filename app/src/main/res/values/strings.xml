@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Graphics</string>
+    <string name="Titulo1">GAME:</string>
+    <string name="Titulo2">TRAVEL OFFLINE</string>
 </resources>
