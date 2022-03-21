@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Graphics</string>
+    <string name="Game">GAME:</string>
+    <string name="Travel">TRAVEL</string>
+    <string name="Offline">OFFLINE</string>
+    <string name="Jugar">JUGAR</string>
 </resources>
