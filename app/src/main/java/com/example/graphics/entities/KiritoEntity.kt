@@ -5,6 +5,10 @@ import android.graphics.Color
 import android.graphics.Paint
 
 class KiritoEntity(canvas: Canvas) : Entity(canvas) {
+    constructor(canvas: Canvas, x: Float, y: Float) : this(canvas) {
+        this.initX = x
+        this.initY = y
+    }
     var jeanColor = Color.BLUE
     var jacketColor = Color.parseColor("#000000")
     var hairColor = Color.parseColor("#000000")
