@@ -9,9 +9,8 @@ class CanvasActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val myCanvas = TempScene(this, { finish()})
+        val myCanvas = TempScene(this) { finish() }
         View.SYSTEM_UI_FLAG_FULLSCREEN.also { myCanvas.systemUiVisibility = it }
         setContentView(myCanvas)
-
     }
 }
