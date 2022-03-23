@@ -1,14 +1,15 @@
 package com.example.graphics.entities
 
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
+import kotlin.math.pow
 
 class KiritoEntity(canvas: Canvas) : Entity(canvas) {
     constructor(canvas: Canvas, x: Float, y: Float) : this(canvas) {
         this.initX = x
         this.initY = y
     }
+    constructor(canvas: Canvas, position: PointF) : this(canvas, position.x, position.y)
+
     var jeanColor = Color.BLUE
     var jacketColor = Color.parseColor("#000000")
     var hairColor = Color.parseColor("#000000")

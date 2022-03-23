@@ -3,10 +3,10 @@ package com.example.graphics.entities
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PointF
 
 open class Entity(canvas: Canvas) {
     constructor() : this(Canvas())
-
     var canvas = canvas
     var initX = 0f
     var initY = 0f

@@ -30,31 +30,25 @@
         android:id="@+id/btnExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
+        android:layout_marginStart="92dp"
         android:layout_marginTop="18dp"
         android:layout_marginBottom="21dp"
+        android:onClick="onClick"
         android:text="@string/exit"
         app:layout_constraintBottom_toBottomOf="@+id/gameBoard"
         app:layout_constraintStart_toStartOf="@+id/gameBoard"
         app:layout_constraintTop_toTopOf="@+id/gameBoard"
-        app:layout_constraintVertical_bias="0.0"
-        android:onClick="onClick"
-        />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="88dp"
+        android:layout_marginEnd="96dp"
+        android:onClick="onClick"
         android:text="@string/play"
         app:layout_constraintBottom_toBottomOf="@+id/gameBoard"
         app:layout_constraintEnd_toEndOf="@+id/gameBoard"
         app:layout_constraintTop_toTopOf="@+id/gameBoard"
-        app:layout_constraintVertical_bias="0.461"
-        android:onClick="onClick"
-        /><![CDATA[
-
-    />
-
-]]>
+        app:layout_constraintVertical_bias="0.461" />
 </androidx.constraintlayout.widget.ConstraintLayout>

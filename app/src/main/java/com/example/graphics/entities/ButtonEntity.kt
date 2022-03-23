@@ -6,18 +6,22 @@ import android.os.Handler
 import android.view.MotionEvent
 
 class ButtonEntity: Entity() {
-    var initPoint: Point = Point(0, 0)
-    var endPoint:Point = Point(0, 0)
+    var initPoint: PointF = PointF(0f, 0f)
+    var endPoint:PointF = PointF(0f, 0f)
+    var isVisible = true
     var text: String = ""
     var isPressed = false
     var action: () -> Unit = {}
     var delay: Long = 200
 
     override fun draw() {
+        if(!isVisible) return
 
+
+        println("draw pressed: $isPressed")
         paint.color = Color.LTGRAY
         paint.style = Style.FILL
-        canvas.drawRect(initPoint.x.toFloat(), initPoint.y.toFloat(), endPoint.x.toFloat(), endPoint.y.toFloat(), paint)
+        canvas.drawRect(initPoint.x, initPoint.y, endPoint.x, endPoint.y, paint)
 
         if(isPressed)
             paint.color = Color.BLACK
@@ -28,12 +32,12 @@ class ButtonEntity: Entity() {
         paint.strokeWidth = 3f
         drawPolygon(
             floatArrayOf(
-                initPoint.x.toFloat(),
-                endPoint.y.toFloat(),
-                initPoint.x.toFloat(),
-                initPoint.y.toFloat(),
-                endPoint.x.toFloat(),
-                initPoint.y.toFloat(),
+                initPoint.x,
+                endPoint.y,
+                initPoint.x,
+                initPoint.y,
+                endPoint.x,
+                initPoint.y,
             )
         )
 
@@ -45,35 +49,32 @@ class ButtonEntity: Entity() {
         paint.style = Style.STROKE
         drawPolygon(
             floatArrayOf(
-                initPoint.x.toFloat(),
-                endPoint.y.toFloat(),
-                endPoint.x.toFloat(),
-                endPoint.y.toFloat(),
-                endPoint.x.toFloat(),
-                initPoint.y.toFloat(),
+                initPoint.x,
+                endPoint.y,
+                endPoint.x,
+                endPoint.y,
+                endPoint.x,
+                initPoint.y,
             )
         )
 
         paint.strokeWidth = 2f
         paint.textSize = 20f
         paint.textAlign = Paint.Align.CENTER
-        canvas.drawText(text, (initPoint.x + endPoint.x).toFloat() / 2, (initPoint.y + endPoint.y).toFloat() / 2 + 5, paint)
+        canvas.drawText(text, (initPoint.x + endPoint.x) / 2, (initPoint.y + endPoint.y) / 2 + 5, paint)
     }
 
-    fun onClick(mouse: Point, event: MotionEvent, invalid: () -> Unit) {
-        if(event == null)
-            return
-
+    fun onClick(mouse: PointF, invalidate: () -> Unit) {
         if(!(mouse.x in initPoint.x .. endPoint.x && mouse.y in initPoint.y .. endPoint.y))
             return
 
         isPressed = true
-        invalid()
+        invalidate()
 
         val handler = Handler()
         handler.postDelayed({
             isPressed = false
-            invalid()
+            invalidate()
             action()
         }, delay)
     }

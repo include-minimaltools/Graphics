@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.Paint.Style
 import android.os.Handler
+import android.util.DisplayMetrics
 import android.view.DragEvent
 import android.view.MotionEvent
 import android.view.View
@@ -22,56 +23,57 @@ class TempScene (context: Context, finish: () -> Unit): View(context) {
     private var environment: Environment = Environment.ROOM
     private var isKiritoVisible: Boolean = false
     private var isDay: Boolean = false
-    private var scale: Float = 3.5f
-    private var kiritoPos: Point = Point(100, 140)
+    private var scale: PointF = PointF(3.5f, 3f)
+    private var kiritoPos: Point = Point(100, 180)
 
     private var btnBack: ButtonEntity = ButtonEntity()
-        .apply { initPoint = Point(660, 10) }
-        .apply { endPoint = Point(830, 60) }
+        .apply { initPoint = PointF(660f, 10f) }
+        .apply { endPoint = PointF(830f, 60f) }
         .apply { text = "Menu Principal" }
         .apply { action = { finish() } }
 
     private var btnMode: ButtonEntity = ButtonEntity()
-        .apply { initPoint = Point(660, 70) }
-        .apply { endPoint = Point(830, 120) }
+        .apply { initPoint = PointF(660f, 70f) }
+        .apply { endPoint = PointF(830f, 120f) }
         .apply { text = "Dia" }
         .apply { action = { isDay = !isDay } }
 
     private var btnKirito: ButtonEntity = ButtonEntity()
-        .apply { initPoint = Point(660, 130) }
-        .apply { endPoint = Point(830, 190) }
+        .apply { initPoint = PointF(660f, 130f) }
+        .apply { endPoint = PointF(830f, 190f) }
         .apply { text = "Kirito" }
         .apply { action = { isKiritoVisible = !isKiritoVisible } }
 
     private var btnHome: ButtonEntity = ButtonEntity()
-        .apply { initPoint = Point(660, 200) }
-        .apply { endPoint = Point(830, 250) }
+        .apply { initPoint = PointF(660f, 200f) }
+        .apply { endPoint = PointF(830f, 250f) }
         .apply { text = "Ir a casa" }
         .apply { action = { environment = Environment.ROOM } }
 
     private var btnTravel: ButtonEntity = ButtonEntity()
-        .apply { initPoint = Point(660, 260) }
-        .apply { endPoint = Point(830, 310) }
+        .apply { initPoint = PointF(660f, 260f) }
+        .apply { endPoint = PointF(830f, 310f) }
         .apply { text = "Viajar" }
         .apply { action = { environment = Environment.EARTH } }
 
     private var btnKiritoLeft: ButtonEntity = ButtonEntity()
-        .apply { initPoint = Point(660, 320) }
-        .apply { endPoint = Point(745, 370) }
+        .apply { initPoint = PointF(660f, 320f) }
+        .apply { endPoint = PointF(745f, 370f) }
         .apply { text = "<" }
         .apply { action = { kiritoMovement(Direction.LEFT) } }
 
     private var btnKiritoRight: ButtonEntity = ButtonEntity()
-        .apply { initPoint = Point(755, 320) }
-        .apply { endPoint = Point(830, 370) }
+        .apply { initPoint = PointF(755f, 320f) }
+        .apply { endPoint = PointF(830f, 370f) }
         .apply { text = ">" }
         .apply { action = { kiritoMovement(Direction.RIGHT) } }
 
     @SuppressLint("DrawAllocation")
-    override fun onDraw(canvas: android.graphics.Canvas) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
-        canvas.scale(scale, scale)
+        scale.x = 3.5f * display.width.toFloat() / 2960f
+        scale.y = display.height.toFloat() / 480f
+        canvas.scale(scale.x, scale.y)
 
         drawContainer(canvas)
 
@@ -83,7 +85,7 @@ class TempScene (context: Context, finish: () -> Unit): View(context) {
                 btnHome.text = "Ir a Casa"
                 btnHome.action = {
                     environment = Environment.ROOM
-                    kiritoPos.y = 140
+                    kiritoPos.y = 180
                 }
             }
             Environment.EARTH -> {
@@ -94,7 +96,7 @@ class TempScene (context: Context, finish: () -> Unit): View(context) {
                 btnTravel.action = {
                     if(environment == Environment.EARTH) {
                         environment = Environment.ROOM
-                        kiritoPos.y = 140
+                        kiritoPos.y = 180
                     } else
                         environment = Environment.EARTH
                 }
@@ -105,7 +107,7 @@ class TempScene (context: Context, finish: () -> Unit): View(context) {
                 btnHome.text = "Ir a la UNI"
                 btnHome.action = {
                     environment = Environment.UNIVERSITY
-                    kiritoPos.y = 120
+                    kiritoPos.y = 140
                 }
             }
         }
@@ -148,25 +150,25 @@ class TempScene (context: Context, finish: () -> Unit): View(context) {
         if(event == null)
             return super.onTouchEvent(event)
 
-        val mouse = Point((event!!.x / scale).toInt(), (event.y / scale).toInt())
+        val mouse = PointF((event.x / scale.x), (event.y / scale.y))
 
         if(environment == Environment.UNIVERSITY)
-            btnMode.onClick(mouse, event) { invalidate() }
+            btnMode.onClick(mouse) { invalidate() }
 
-        btnBack.onClick(mouse, event) { invalidate() }
+        btnBack.onClick(mouse) { invalidate() }
 
         if(environment != Environment.EARTH)
         {
-            btnKirito.onClick(mouse, event) { invalidate() }
-            btnHome.onClick(mouse, event) { invalidate() }
+            btnKirito.onClick(mouse) { invalidate() }
+            btnHome.onClick(mouse) { invalidate() }
         }
 
 
-        btnTravel.onClick(mouse, event) { invalidate() }
+        btnTravel.onClick(mouse) { invalidate() }
 
         if(isKiritoVisible){
-            btnKiritoLeft.onClick(mouse, event) { invalidate() }
-            btnKiritoRight.onClick(mouse, event) { invalidate() }
+            btnKiritoLeft.onClick(mouse) { invalidate() }
+            btnKiritoRight.onClick(mouse) { invalidate() }
         }
         return super.onTouchEvent(event)
     }
@@ -193,21 +195,21 @@ class TempScene (context: Context, finish: () -> Unit): View(context) {
         paint.color = Color.parseColor("#BAE9EE")
         paint.style = Style.FILL
 
-        canvas.drawRect(640f,0f,845f,410f, paint)
+        canvas.drawRect(640f,0f,845f,480f, paint)
 
         paint.color = Color.BLACK
         paint.isAntiAlias = true
         paint.strokeWidth = 8f
         paint.style = Style.STROKE
 
-        canvas.drawLine(640f, 0f, 640f, 410f, paint)
+        canvas.drawLine(640f, 0f, 640f, 480f, paint)
 
         canvas.drawLine(640f, 0f, 845f, 0f, paint)
 
         paint.strokeWidth = 5f
         paint.color = Color.WHITE
-        canvas.drawLine(845f, 0f, 845f, 410f, paint)
+        canvas.drawLine(845f, 0f, 845f, 480f, paint)
 
-        canvas.drawLine(640f, 410f, 845f, 410f, paint)
+        canvas.drawLine(640f, 480f, 845f, 480f, paint)
     }
 }
